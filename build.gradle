@@ -1,0 +1,51 @@
+allprojects {
+    apply plugin: "java-library"
+    apply plugin: "idea"
+}
+
+idea {
+    project {
+        jdkName = JavaVersion.VERSION_1_8
+        languageLevel = JavaVersion.VERSION_1_8
+
+        vcs = "Git"
+    }
+
+    workspace.iws.withXml { provider ->
+        def junitDefaults = provider.node.component.find { it.@name == 'RunManager' }.configuration.find {
+            it.@type == 'JUnit'
+        }
+        junitDefaults.option.find { it.@name == 'WORKING_DIRECTORY' }.@value = '$MODULE_DIR$'
+    }
+}
+
+subprojects {
+    group = 'com.github.dreamhead.bot'
+    version = new Date().format('yyyyMMdd') + '-SNAPSHOT'
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked"
+        options.compilerArgs << "-Xlint:deprecation"
+    }
+
+    repositories {
+        jcenter()
+    }
+
+    project.dependencies {
+        implementation("com.google.guava:guava:$guavaVersion")
+        testImplementation("org.assertj:assertj-core:$assertJVersion")
+    }
+
+    apply from: "$rootDir/gradle/config/scripts/style.gradle"
+    apply from: "$rootDir/gradle/config/scripts/coverage.gradle"
+}
+
+configure(subprojects - project(':bot-core')) {
+    project.dependencies {
+        implementation(project(':bot-core'))
+    }
+}
+
