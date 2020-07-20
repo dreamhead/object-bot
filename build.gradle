@@ -1,6 +1,7 @@
 allprojects {
-    apply plugin: "java-library"
-    apply plugin: "idea"
+    apply plugin: 'java-library'
+    apply plugin: 'idea'
+    apply plugin: 'maven-publish'
 }
 
 idea {
@@ -21,7 +22,7 @@ idea {
 
 subprojects {
     group = 'com.github.dreamhead.bot'
-    version = new Date().format('yyyyMMdd') + '-SNAPSHOT'
+    version = '1.0.0-SNAPSHOT'
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 
@@ -41,6 +42,54 @@ subprojects {
 
     apply from: "$rootDir/gradle/config/scripts/style.gradle"
     apply from: "$rootDir/gradle/config/scripts/coverage.gradle"
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                groupId = project.group
+                artifactId = project.name
+                version = project.version
+
+                from components.java
+
+                pom {
+                    name = project.name
+                    description = 'Object bot is a library for setting up Java objects as test data.'
+                    url = 'https://github.com/dreamhead/object-bot'
+                    licenses {
+                        license {
+                            name = 'MIT Licence'
+                            url = 'https://raw.githubusercontent.com/dreamhead/object-bot/master/MIT-LICENSE.txt'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'dreamhead'
+                            name = 'Zheng Ye'
+                            email = 'dreamhead.cn@gmail.com'
+                        }
+                    }
+                    scm {
+                        connection = 'https://github.com/dreamhead/object-bot.git'
+                        developerConnection = 'https://github.com/dreamhead/object-bot.git'
+                        url = 'https://github.com/dreamhead/object-bot'
+                    }
+                }
+            }
+        }
+
+        repositories {
+            maven {
+                def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
+                url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+                credentials {
+                    username = sonatypeUsername
+                    password = sonatypePassword
+                }
+            }
+        }
+    }
 }
 
 configure(subprojects - project(':bot-core')) {
