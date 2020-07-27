@@ -118,16 +118,8 @@ public final class ReflectionSupport {
 
         requireNonNull(annotationType, "Annotation type must not be null");
 
-        if (element == null) {
-            return Optional.empty();
-        }
-
-        A annotation = element.getDeclaredAnnotation(annotationType);
-        if (annotation != null) {
-            return Optional.of(annotation);
-        }
-
-        return Optional.empty();
+        return Optional.ofNullable(element)
+                       .map(ele -> ele.getDeclaredAnnotation(annotationType));
     }
 
     private ReflectionSupport() {
