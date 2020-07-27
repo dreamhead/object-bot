@@ -53,7 +53,7 @@ public class BotTest {
     }
 
     @Test
-    public void should_get_data_with_ant_field() {
+    public void should_get_data_with_any_field() {
         assertThat(data4.getField1()).isEqualTo("string");
     }
 }
