@@ -12,6 +12,7 @@ import com.github.dreamhead.bot.annotation.FloatField;
 import com.github.dreamhead.bot.annotation.IntField;
 import com.github.dreamhead.bot.annotation.LongField;
 import com.github.dreamhead.bot.ObjectBot;
+import com.github.dreamhead.bot.annotation.ShortField;
 import com.github.dreamhead.bot.annotation.StringField;
 import com.github.dreamhead.bot.util.FieldEntry;
 import org.junit.jupiter.api.extension.AfterAllCallback;
@@ -69,13 +70,16 @@ public class BotExtension implements BeforeAllCallback, AfterAllCallback, TestIn
                 annotation -> FieldEntry.of(annotation.name(), annotation.value()));
         List<FieldEntry<Object>> booleanModifiers = getModifiers(field, BooleanField.class,
                 annotation -> FieldEntry.of(annotation.name(), annotation.value()));
+        List<FieldEntry<Object>> shortModifiers = getModifiers(field, ShortField.class,
+                annotation -> FieldEntry.of(annotation.name(), annotation.value()));
+
 
         List<FieldEntry<Object>> anyModifiers = getModifiers(field, AnyField.class,
                 this::getAnyValue);
 
         return Stream.of(stringModifiers, longModifiers, intModifiers,
                 anyModifiers, doubleModifiers, floatModifiers, charModifiers,
-                booleanModifiers)
+                booleanModifiers, shortModifiers)
                 .flatMap(Collection::stream)
                 .collect(toList());
     }

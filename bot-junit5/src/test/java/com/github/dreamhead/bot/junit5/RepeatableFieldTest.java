@@ -12,6 +12,7 @@ import com.github.dreamhead.bot.annotation.FloatField;
 import com.github.dreamhead.bot.annotation.IntField;
 import com.github.dreamhead.bot.annotation.LongField;
 import com.github.dreamhead.bot.ObjectBot;
+import com.github.dreamhead.bot.annotation.ShortField;
 import com.github.dreamhead.bot.annotation.StringField;
 import com.github.dreamhead.bot.junit5.junit5.BotExtension;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,7 @@ public class RepeatableFieldTest implements BotInitializer {
         bot.define("floatFields", new FloatFieldsData(-1.1f, -1.2f));
         bot.define("charFields", new CharFieldsData('a', 'b'));
         bot.define("booleanFields", new BooleanFieldsData(true, true));
+        bot.define("shortFields", new ShortFieldsData((short)-1, (short)-2));
     }
 
     @Bot("longFields")
@@ -122,6 +124,17 @@ public class RepeatableFieldTest implements BotInitializer {
         assertThat(booleanFieldData.field2).isEqualTo(false);
     }
 
+    @Bot("shortFields")
+    @ShortField(name = "field1", value = 1)
+    @ShortField(name = "field2", value = 2)
+    private ShortFieldsData shortFieldData;
+
+    @Test
+    void should_have_short_fields() {
+        assertThat(shortFieldData.field1).isEqualTo((short)1);
+        assertThat(shortFieldData.field2).isEqualTo((short)2);
+    }
+
     private static class LongFieldsData {
         private long field1;
         private long field2;
@@ -152,7 +165,7 @@ public class RepeatableFieldTest implements BotInitializer {
         }
     }
 
-    private class AnyFieldsData {
+    private static class AnyFieldsData {
         private Object field1;
         private Object field2;
 
@@ -176,7 +189,7 @@ public class RepeatableFieldTest implements BotInitializer {
         }
     }
 
-    private class DoubleFieldsData {
+    private static class DoubleFieldsData {
         private double field1;
         private double field2;
 
@@ -186,7 +199,7 @@ public class RepeatableFieldTest implements BotInitializer {
         }
     }
 
-    private class FloatFieldsData {
+    private static class FloatFieldsData {
         private float field1;
         private float field2;
 
@@ -196,7 +209,7 @@ public class RepeatableFieldTest implements BotInitializer {
         }
     }
 
-    private class CharFieldsData {
+    private static class CharFieldsData {
         private char field1;
         private char field2;
 
@@ -206,11 +219,21 @@ public class RepeatableFieldTest implements BotInitializer {
         }
     }
 
-    private class BooleanFieldsData {
+    private static class BooleanFieldsData {
         private boolean field1;
         private boolean field2;
 
         public BooleanFieldsData(final boolean field1, final boolean field2) {
+            this.field1 = field1;
+            this.field2 = field2;
+        }
+    }
+
+    private static class ShortFieldsData {
+        private short field1;
+        private short field2;
+
+        public ShortFieldsData(final short field1, final short field2) {
             this.field1 = field1;
             this.field2 = field2;
         }
