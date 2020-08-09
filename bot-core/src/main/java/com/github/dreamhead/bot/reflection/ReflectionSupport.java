@@ -58,13 +58,21 @@ public final class ReflectionSupport {
         U result = function.apply(object);
 
         if (!oldAccessible) {
-            object.setAccessible(oldAccessible);
+            object.setAccessible(false);
         }
 
         return result;
     }
 
-    public static <T, U> void setField(final T object, final Field field, final U value) {
+    public static <T> Optional<Field> getDeclaredField(final Class<T> clazz, final String name) {
+        try {
+            return Optional.of(clazz.getDeclaredField(name));
+        } catch (NoSuchFieldException e) {
+            return Optional.empty();
+        }
+    }
+
+    public static <T, U> void setFieldValue(final T object, final Field field, final U value) {
         requireNonNull(object, "Object must not be null");
         requireNonNull(field, "Field must not be null");
         requireNonNull(value, "Value must not be null");
@@ -79,7 +87,7 @@ public final class ReflectionSupport {
         });
     }
 
-    public static <T> Object getField(final T object, final Field field) {
+    public static <T> Object getFieldValue(final T object, final Field field) {
         requireNonNull(object, "Object must not be null");
         requireNonNull(field, "Field must not be null");
 

@@ -29,7 +29,7 @@ import java.util.stream.Stream;
 import static com.github.dreamhead.bot.reflection.ReflectionSupport.findAnnotatedFields;
 import static com.github.dreamhead.bot.reflection.ReflectionSupport.findAnnotation;
 import static com.github.dreamhead.bot.reflection.ReflectionSupport.newInstance;
-import static com.github.dreamhead.bot.reflection.ReflectionSupport.setField;
+import static com.github.dreamhead.bot.reflection.ReflectionSupport.setFieldValue;
 import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.extension.ExtensionContext.Namespace.create;
 
@@ -47,7 +47,7 @@ public class BotExtension implements BeforeAllCallback, AfterAllCallback, TestIn
             Bot annotation = field.getAnnotation(Bot.class);
             List<Pair<String, Object>> pairs = getModifiers(field);
             Object value = bot.of(annotation.value(), field.getType(), pairs.toArray(new Pair[pairs.size()]));
-            setField(testInstance, field, value);
+            setFieldValue(testInstance, field, value);
         }
     }
 

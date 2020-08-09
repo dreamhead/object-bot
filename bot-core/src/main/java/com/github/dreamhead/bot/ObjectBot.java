@@ -1,18 +1,19 @@
 package com.github.dreamhead.bot;
 
 import com.github.dreamhead.bot.util.Pair;
+import com.rits.cloning.Cloner;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
-import static com.github.dreamhead.bot.reflection.ReflectionSupport.getField;
-import static com.github.dreamhead.bot.reflection.ReflectionSupport.newInstance;
-import static com.github.dreamhead.bot.reflection.ReflectionSupport.setField;
-import static com.github.dreamhead.bot.reflection.ReflectionSupport.withAccessible;
+import static com.github.dreamhead.bot.reflection.ReflectionSupport.getDeclaredField;
+import static com.github.dreamhead.bot.reflection.ReflectionSupport.setFieldValue;
 
 public class ObjectBot {
     private Map<String, Object> container = new HashMap<>();
+    private final Cloner cloner = new Cloner();
 
     public final ObjectBot define(final String name,
                                   final Object object) {
@@ -21,43 +22,32 @@ public class ObjectBot {
     }
 
     @SafeVarargs
+    @SuppressWarnings("unchecked")
     public final <T> T of(final String name, final Class<T> clazz, final Pair<String, ?>... pairs) {
         Object object = container.get(name);
+
+        if (!clazz.isAssignableFrom(object.getClass())) {
+            throw new IllegalArgumentException("Mismatch class [" + clazz.getName() + "] found");
+        }
+
+        T existing = (T) object;
 
         if (pairs.length <= 0) {
             return clazz.cast(object);
         }
 
-        T newObj = newInstance(clazz);
-        Field[] fields = clazz.getDeclaredFields();
-        for (Field field : fields) {
-            copyField(object, newObj, field, pairs);
-        }
+        T newObj = cloner.deepClone(existing);
 
-        return newObj;
-    }
-
-    @SafeVarargs
-    private final <T> void copyField(final T oldObj,
-                                     final T newObj,
-                                     final Field field,
-                                     final Pair<String, ?>... pairs) {
-        withAccessible(field, (accessible) -> {
-            Object fieldValue = getFieldValue(oldObj, field, pairs);
-            setField(newObj, field, fieldValue);
-            return null;
-        });
-    }
-
-    private <T> Object getFieldValue(final T oldObj,
-                                     final Field field,
-                                     final Pair<String, ?>[] pairs) {
         for (Pair<String, ?> pair : pairs) {
-            if (field.getName().equals(pair.first())) {
-                return pair.second();
+            String fieldName = pair.first();
+            Optional<Field> field = getDeclaredField(clazz, fieldName);
+            if (field.isPresent()) {
+                setFieldValue(newObj, field.get(), pair.second());
+            } else {
+                throw new IllegalArgumentException("No field [" + fieldName + "] found");
             }
         }
 
-        return getField(oldObj, field);
+        return newObj;
     }
 }
