@@ -9,7 +9,7 @@ import com.github.dreamhead.bot.IntField;
 import com.github.dreamhead.bot.LongField;
 import com.github.dreamhead.bot.ObjectBot;
 import com.github.dreamhead.bot.StringField;
-import com.github.dreamhead.bot.util.Pair;
+import com.github.dreamhead.bot.util.FieldEntry;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -37,28 +37,27 @@ public class BotExtension implements BeforeAllCallback, AfterAllCallback, TestIn
     private static final ExtensionContext.Namespace BOT = create("com.github.dreamhead.bot");
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void postProcessTestInstance(final Object testInstance, final ExtensionContext context) throws Exception {
+    public void postProcessTestInstance(final Object testInstance, final ExtensionContext context) {
         Class<?> testInstanceClass = testInstance.getClass();
         ObjectBot bot = context.getStore(BOT).get(testInstanceClass, ObjectBot.class);
 
         List<Field> fields = findAnnotatedFields(testInstanceClass, Bot.class);
         for (Field field : fields) {
             Bot annotation = field.getAnnotation(Bot.class);
-            List<Pair<String, Object>> pairs = getModifiers(field);
-            Object value = bot.of(annotation.value(), field.getType(), pairs.toArray(new Pair[pairs.size()]));
+            List<FieldEntry<Object>> pairs = getModifiers(field);
+            Object value = bot.of(annotation.value(), field.getType(), pairs.toArray(new FieldEntry[0]));
             setFieldValue(testInstance, field, value);
         }
     }
 
-    private List<Pair<String, Object>> getModifiers(final Field field) {
-        List<Pair<String, Object>> stringModifiers = getModifiers(field, StringField.class,
-                annotation -> Pair.of(annotation.name(), annotation.value()));
-        List<Pair<String, Object>> longModifiers = getModifiers(field, LongField.class,
-                annotation -> Pair.of(annotation.name(), annotation.value()));
-        List<Pair<String, Object>> intModifiers = getModifiers(field, IntField.class,
-                annotation -> Pair.of(annotation.name(), annotation.value()));
-        List<Pair<String, Object>> anyModifiers = getModifiers(field, AnyField.class,
+    private List<FieldEntry<Object>> getModifiers(final Field field) {
+        List<FieldEntry<Object>> stringModifiers = getModifiers(field, StringField.class,
+                annotation -> FieldEntry.of(annotation.name(), annotation.value()));
+        List<FieldEntry<Object>> longModifiers = getModifiers(field, LongField.class,
+                annotation -> FieldEntry.of(annotation.name(), annotation.value()));
+        List<FieldEntry<Object>> intModifiers = getModifiers(field, IntField.class,
+                annotation -> FieldEntry.of(annotation.name(), annotation.value()));
+        List<FieldEntry<Object>> anyModifiers = getModifiers(field, AnyField.class,
                 this::getAnyValue);
 
         return Stream.of(stringModifiers, longModifiers, intModifiers, anyModifiers)
@@ -66,16 +65,16 @@ public class BotExtension implements BeforeAllCallback, AfterAllCallback, TestIn
                 .collect(toList());
     }
 
-    private Pair<String, Object> getAnyValue(final AnyField annotation) {
-        Class<? extends FieldFactory> factory = annotation.factory();
-        return Pair.of(annotation.name(), newInstance(factory).getValue());
+    private FieldEntry<Object> getAnyValue(final AnyField annotation) {
+        Class<? extends FieldFactory<?>> factory = annotation.factory();
+        return FieldEntry.of(annotation.name(), newInstance(factory).getValue());
     }
 
     @SuppressWarnings("unchecked")
     private <T extends Annotation>
-    List<Pair<String, Object>> getModifiers(final Field field,
+    List<FieldEntry<Object>> getModifiers(final Field field,
                                             final Class<T> annotationClass,
-                                            final Function<T, Pair<String, Object>> function) {
+                                            final Function<T, FieldEntry<Object>> function) {
         Annotation[] annotations = field.getAnnotationsByType(annotationClass);
         if (annotations.length == 0) {
             return new ArrayList<>();
@@ -95,7 +94,7 @@ public class BotExtension implements BeforeAllCallback, AfterAllCallback, TestIn
     }
 
     @Override
-    public void beforeAll(final ExtensionContext context) throws Exception {
+    public void beforeAll(final ExtensionContext context) {
         Class<?> testClass = context.getRequiredTestClass();
 
         Optional<BotWith> annotation = findBotAnnotation(context);
@@ -112,7 +111,7 @@ public class BotExtension implements BeforeAllCallback, AfterAllCallback, TestIn
     }
 
     @Override
-    public void afterAll(final ExtensionContext context) throws Exception {
+    public void afterAll(final ExtensionContext context) {
         Class<?> testClass = context.getRequiredTestClass();
         context.getStore(BOT).remove(testClass);
     }

@@ -1,6 +1,6 @@
 package com.github.dreamhead.bot;
 
-import com.github.dreamhead.bot.util.Pair;
+import com.github.dreamhead.bot.util.FieldEntry;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,7 +21,7 @@ public class ObjectBotTest {
     public void should_override_fields() {
         ObjectBot bot = new ObjectBot();
         bot.define("hello", new Data("foo", "bar"));
-        Data data = bot.of("hello", Data.class, Pair.of("field1", "foo1"));
+        Data data = bot.of("hello", Data.class, FieldEntry.of("field1", "foo1"));
         assertThat(data.getField1()).isEqualTo("foo1");
         assertThat(data.getField2()).isEqualTo("bar");
     }
@@ -39,6 +39,6 @@ public class ObjectBotTest {
         ObjectBot bot = new ObjectBot();
         bot.define("hello", new Data("foo", "bar"));
         assertThrows(IllegalArgumentException.class, () ->
-                bot.of("hello", Data.class, Pair.of("unknown", "foo1")));
+                bot.of("hello", Data.class, FieldEntry.of("unknown", "foo1")));
     }
 }

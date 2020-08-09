@@ -1,6 +1,6 @@
 package com.github.dreamhead.bot;
 
-import com.github.dreamhead.bot.util.Pair;
+import com.github.dreamhead.bot.util.FieldEntry;
 import com.rits.cloning.Cloner;
 
 import java.lang.reflect.Field;
@@ -23,7 +23,7 @@ public class ObjectBot {
 
     @SafeVarargs
     @SuppressWarnings("unchecked")
-    public final <T> T of(final String name, final Class<T> clazz, final Pair<String, ?>... pairs) {
+    public final <T> T of(final String name, final Class<T> clazz, final FieldEntry<?>... pairs) {
         Object object = container.get(name);
 
         if (!clazz.isAssignableFrom(object.getClass())) {
@@ -38,11 +38,11 @@ public class ObjectBot {
 
         T newObj = cloner.deepClone(existing);
 
-        for (Pair<String, ?> pair : pairs) {
-            String fieldName = pair.first();
+        for (FieldEntry<?> pair : pairs) {
+            String fieldName = pair.name();
             Optional<Field> field = getDeclaredField(clazz, fieldName);
             if (field.isPresent()) {
-                setFieldValue(newObj, field.get(), pair.second());
+                setFieldValue(newObj, field.get(), pair.value());
             } else {
                 throw new IllegalArgumentException("No field [" + fieldName + "] found");
             }
