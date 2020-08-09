@@ -5,8 +5,10 @@ import com.rits.cloning.Cloner;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import static com.github.dreamhead.bot.reflection.ReflectionSupport.getDeclaredField;
 import static com.github.dreamhead.bot.reflection.ReflectionSupport.setFieldValue;
@@ -23,31 +25,46 @@ public class ObjectBot {
 
     @SafeVarargs
     @SuppressWarnings("unchecked")
-    public final <T> T of(final String name, final Class<T> clazz, final FieldEntry<?>... pairs) {
+    public final <T> T of(final String name, final Class<T> clazz, final FieldEntry<?>... entries) {
         Object object = container.get(name);
 
         if (!clazz.isAssignableFrom(object.getClass())) {
             throw new IllegalArgumentException("Mismatch class [" + clazz.getName() + "] found");
         }
 
-        T existing = (T) object;
-
-        if (pairs.length <= 0) {
+        if (entries.length <= 0) {
             return clazz.cast(object);
+        } else {
+            validateEntries(entries);
         }
 
+
+
+        T existing = (T) object;
         T newObj = cloner.deepClone(existing);
 
-        for (FieldEntry<?> pair : pairs) {
-            String fieldName = pair.name();
+        for (FieldEntry<?> entry : entries) {
+            String fieldName = entry.name();
             Optional<Field> field = getDeclaredField(clazz, fieldName);
             if (field.isPresent()) {
-                setFieldValue(newObj, field.get(), pair.value());
+                setFieldValue(newObj, field.get(), entry.value());
             } else {
                 throw new IllegalArgumentException("No field [" + fieldName + "] found");
             }
         }
 
         return newObj;
+    }
+
+    private void validateEntries(final FieldEntry<?>[] entries) {
+        Set<String> set = new HashSet<>();
+        for (FieldEntry<?> entry : entries) {
+            set.add(entry.name());
+        }
+
+        if (set.size() < entries.length) {
+            throw new IllegalArgumentException("Duplicated name for entries is not allowed");
+        }
+
     }
 }
