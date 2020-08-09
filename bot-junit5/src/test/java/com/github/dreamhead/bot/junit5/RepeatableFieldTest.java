@@ -7,6 +7,7 @@ import com.github.dreamhead.bot.annotation.BotInitializer;
 import com.github.dreamhead.bot.annotation.BotWith;
 import com.github.dreamhead.bot.annotation.ByteField;
 import com.github.dreamhead.bot.annotation.CharField;
+import com.github.dreamhead.bot.annotation.ClassField;
 import com.github.dreamhead.bot.annotation.DoubleField;
 import com.github.dreamhead.bot.annotation.FieldFactory;
 import com.github.dreamhead.bot.annotation.FloatField;
@@ -36,6 +37,7 @@ public class RepeatableFieldTest implements BotInitializer {
         bot.define("booleanFields", new BooleanFieldsData(true, true));
         bot.define("shortFields", new ShortFieldsData((short)-1, (short)-2));
         bot.define("byteFields", new ByteFieldsData((byte)-1, (byte)-2));
+        bot.define("classFields", new ClassFieldsData(Integer.class, Long.class));
     }
 
     @Bot("longFields")
@@ -148,6 +150,17 @@ public class RepeatableFieldTest implements BotInitializer {
         assertThat(byteFieldData.field2).isEqualTo((byte)2);
     }
 
+    @Bot("classFields")
+    @ClassField(name = "field1", value = Boolean.class)
+    @ClassField(name = "field2", value = Class.class)
+    private ClassFieldsData classFieldData;
+
+    @Test
+    void should_have_class_fields() {
+        assertThat(classFieldData.field1).isEqualTo(Boolean.class);
+        assertThat(classFieldData.field2).isEqualTo(Class.class);
+    }
+
     private static class LongFieldsData {
         private long field1;
         private long field2;
@@ -257,6 +270,17 @@ public class RepeatableFieldTest implements BotInitializer {
         private byte field2;
 
         public ByteFieldsData(final byte field1, final byte field2) {
+            this.field1 = field1;
+            this.field2 = field2;
+        }
+    }
+
+    private static class ClassFieldsData {
+        private Class<?> field1;
+        private Class<?> field2;
+
+        public ClassFieldsData(final Class<?> field1,
+                               final Class<?> field2) {
             this.field1 = field1;
             this.field2 = field2;
         }

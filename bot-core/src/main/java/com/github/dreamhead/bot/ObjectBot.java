@@ -29,7 +29,7 @@ public class ObjectBot {
         Object object = container.get(name);
 
         if (!clazz.isAssignableFrom(object.getClass())) {
-            throw new IllegalArgumentException("Mismatch class [" + clazz.getName() + "] found");
+            throw new IllegalArgumentException("Mismatch class [" + clazz.getName() + "] found for Bot [" + name + "]");
         }
 
         if (entries.length <= 0) {

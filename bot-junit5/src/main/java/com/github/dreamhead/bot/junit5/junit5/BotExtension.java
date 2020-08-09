@@ -7,6 +7,7 @@ import com.github.dreamhead.bot.annotation.BotInitializer;
 import com.github.dreamhead.bot.annotation.BotWith;
 import com.github.dreamhead.bot.annotation.ByteField;
 import com.github.dreamhead.bot.annotation.CharField;
+import com.github.dreamhead.bot.annotation.ClassField;
 import com.github.dreamhead.bot.annotation.DoubleField;
 import com.github.dreamhead.bot.annotation.FieldFactory;
 import com.github.dreamhead.bot.annotation.FloatField;
@@ -75,13 +76,15 @@ public class BotExtension implements BeforeAllCallback, AfterAllCallback, TestIn
                 annotation -> FieldEntry.of(annotation.name(), annotation.value()));
         List<FieldEntry<Object>> byteModifiers = getModifiers(field, ByteField.class,
                 annotation -> FieldEntry.of(annotation.name(), annotation.value()));
+        List<FieldEntry<Object>> classModifiers = getModifiers(field, ClassField.class,
+                annotation -> FieldEntry.of(annotation.name(), annotation.value()));
 
         List<FieldEntry<Object>> anyModifiers = getModifiers(field, AnyField.class,
                 this::getAnyValue);
 
         return Stream.of(stringModifiers, longModifiers, intModifiers,
                 anyModifiers, doubleModifiers, floatModifiers, charModifiers,
-                booleanModifiers, shortModifiers, byteModifiers)
+                booleanModifiers, shortModifiers, byteModifiers, classModifiers)
                 .flatMap(Collection::stream)
                 .collect(toList());
     }
