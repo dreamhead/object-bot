@@ -11,6 +11,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Repeatable(value = LongFields.class)
 public @interface LongField {
-    String name() default "";
+    String name();
     long value();
 }

@@ -11,6 +11,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Repeatable(value = IntFields.class)
 public @interface IntField {
-    String name() default "";
+    String name();
     int value();
 }

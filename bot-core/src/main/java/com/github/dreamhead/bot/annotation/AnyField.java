@@ -11,6 +11,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Repeatable(value = AnyFields.class)
 public @interface AnyField {
-    String name() default "";
+    String name();
     Class<? extends FieldFactory<?>> factory();
 }

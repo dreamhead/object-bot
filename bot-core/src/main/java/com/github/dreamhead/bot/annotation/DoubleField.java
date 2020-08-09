@@ -11,6 +11,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Repeatable(value = DoubleFields.class)
 public @interface DoubleField {
-    String name() default "";
+    String name();
     double value();
 }

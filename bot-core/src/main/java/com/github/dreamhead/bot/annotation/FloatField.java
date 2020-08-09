@@ -11,6 +11,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Repeatable(value = FloatFields.class)
 public @interface FloatField {
-    String name() default "";
+    String name();
     float value();
 }
