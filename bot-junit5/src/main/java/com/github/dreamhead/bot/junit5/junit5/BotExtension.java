@@ -1,6 +1,7 @@
 package com.github.dreamhead.bot.junit5.junit5;
 
 import com.github.dreamhead.bot.annotation.AnyField;
+import com.github.dreamhead.bot.annotation.BooleanField;
 import com.github.dreamhead.bot.annotation.Bot;
 import com.github.dreamhead.bot.annotation.BotInitializer;
 import com.github.dreamhead.bot.annotation.BotWith;
@@ -66,13 +67,15 @@ public class BotExtension implements BeforeAllCallback, AfterAllCallback, TestIn
                 annotation -> FieldEntry.of(annotation.name(), annotation.value()));
         List<FieldEntry<Object>> charModifiers = getModifiers(field, CharField.class,
                 annotation -> FieldEntry.of(annotation.name(), annotation.value()));
-
+        List<FieldEntry<Object>> booleanModifiers = getModifiers(field, BooleanField.class,
+                annotation -> FieldEntry.of(annotation.name(), annotation.value()));
 
         List<FieldEntry<Object>> anyModifiers = getModifiers(field, AnyField.class,
                 this::getAnyValue);
 
         return Stream.of(stringModifiers, longModifiers, intModifiers,
-                anyModifiers, doubleModifiers, floatModifiers, charModifiers)
+                anyModifiers, doubleModifiers, floatModifiers, charModifiers,
+                booleanModifiers)
                 .flatMap(Collection::stream)
                 .collect(toList());
     }

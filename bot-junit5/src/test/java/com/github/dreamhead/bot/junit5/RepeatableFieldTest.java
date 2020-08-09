@@ -1,6 +1,7 @@
 package com.github.dreamhead.bot.junit5;
 
 import com.github.dreamhead.bot.annotation.AnyField;
+import com.github.dreamhead.bot.annotation.BooleanField;
 import com.github.dreamhead.bot.annotation.Bot;
 import com.github.dreamhead.bot.annotation.BotInitializer;
 import com.github.dreamhead.bot.annotation.BotWith;
@@ -30,6 +31,7 @@ public class RepeatableFieldTest implements BotInitializer {
         bot.define("doubleFields", new DoubleFieldsData(-1.1, -1.2));
         bot.define("floatFields", new FloatFieldsData(-1.1f, -1.2f));
         bot.define("charFields", new CharFieldsData('a', 'b'));
+        bot.define("booleanFields", new BooleanFieldsData(true, true));
     }
 
     @Bot("longFields")
@@ -107,6 +109,17 @@ public class RepeatableFieldTest implements BotInitializer {
     void should_have_char_fields() {
         assertThat(charFieldData.field1).isEqualTo('x');
         assertThat(charFieldData.field2).isEqualTo('y');
+    }
+
+    @Bot("booleanFields")
+    @BooleanField(name = "field1", value = false)
+    @BooleanField(name = "field2", value = false)
+    private BooleanFieldsData booleanFieldData;
+
+    @Test
+    void should_have_boolean_fields() {
+        assertThat(booleanFieldData.field1).isEqualTo(false);
+        assertThat(booleanFieldData.field2).isEqualTo(false);
     }
 
     private static class LongFieldsData {
@@ -188,6 +201,16 @@ public class RepeatableFieldTest implements BotInitializer {
         private char field2;
 
         public CharFieldsData(final char field1, final char field2) {
+            this.field1 = field1;
+            this.field2 = field2;
+        }
+    }
+
+    private class BooleanFieldsData {
+        private boolean field1;
+        private boolean field2;
+
+        public BooleanFieldsData(final boolean field1, final boolean field2) {
             this.field1 = field1;
             this.field2 = field2;
         }
