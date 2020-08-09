@@ -4,6 +4,7 @@ import com.github.dreamhead.bot.AnyField;
 import com.github.dreamhead.bot.Bot;
 import com.github.dreamhead.bot.BotInitializer;
 import com.github.dreamhead.bot.BotWith;
+import com.github.dreamhead.bot.CharField;
 import com.github.dreamhead.bot.DoubleField;
 import com.github.dreamhead.bot.FieldFactory;
 import com.github.dreamhead.bot.FloatField;
@@ -28,6 +29,7 @@ public class RepeatableFieldTest implements BotInitializer {
         bot.define("anyFields", new AnyFieldsData("hello", 1L));
         bot.define("doubleFields", new DoubleFieldsData(-1.1, -1.2));
         bot.define("floatFields", new FloatFieldsData(-1.1f, -1.2f));
+        bot.define("charFields", new CharFieldsData('a', 'b'));
     }
 
     @Bot("longFields")
@@ -94,6 +96,17 @@ public class RepeatableFieldTest implements BotInitializer {
     void should_have_float_fields() {
         assertThat(floatFieldData.field1).isEqualTo(1.0f);
         assertThat(floatFieldData.field2).isEqualTo(2.0f);
+    }
+
+    @Bot("charFields")
+    @CharField(name = "field1", value = 'x')
+    @CharField(name = "field2", value = 'y')
+    private CharFieldsData charFieldData;
+
+    @Test
+    void should_have_char_fields() {
+        assertThat(charFieldData.field1).isEqualTo('x');
+        assertThat(charFieldData.field2).isEqualTo('y');
     }
 
     private static class LongFieldsData {
@@ -164,7 +177,17 @@ public class RepeatableFieldTest implements BotInitializer {
         private float field1;
         private float field2;
 
-        public FloatFieldsData(float field1, float field2) {
+        public FloatFieldsData(final float field1, final float field2) {
+            this.field1 = field1;
+            this.field2 = field2;
+        }
+    }
+
+    private class CharFieldsData {
+        private char field1;
+        private char field2;
+
+        public CharFieldsData(final char field1, final char field2) {
             this.field1 = field1;
             this.field2 = field2;
         }
