@@ -1,6 +1,6 @@
 package com.github.dreamhead.bot.junit5;
 
-import com.github.dreamhead.bot.BotInitializer;
+import com.github.dreamhead.bot.annotation.BotInitializer;
 import com.github.dreamhead.bot.ObjectBot;
 
 public class FooBotInitializer implements BotInitializer {

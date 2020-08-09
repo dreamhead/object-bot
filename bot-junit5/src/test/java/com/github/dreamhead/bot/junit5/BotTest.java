@@ -1,11 +1,11 @@
 package com.github.dreamhead.bot.junit5;
 
-import com.github.dreamhead.bot.AnyField;
-import com.github.dreamhead.bot.Bot;
-import com.github.dreamhead.bot.BotWith;
-import com.github.dreamhead.bot.IntField;
-import com.github.dreamhead.bot.LongField;
-import com.github.dreamhead.bot.StringField;
+import com.github.dreamhead.bot.annotation.AnyField;
+import com.github.dreamhead.bot.annotation.Bot;
+import com.github.dreamhead.bot.annotation.BotWith;
+import com.github.dreamhead.bot.annotation.IntField;
+import com.github.dreamhead.bot.annotation.LongField;
+import com.github.dreamhead.bot.annotation.StringField;
 import com.github.dreamhead.bot.junit5.junit5.BotExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

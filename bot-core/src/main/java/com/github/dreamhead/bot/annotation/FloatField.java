@@ -1,4 +1,4 @@
-package com.github.dreamhead.bot;
+package com.github.dreamhead.bot.annotation;
 
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
@@ -9,8 +9,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target(FIELD)
 @Retention(RUNTIME)
-@Repeatable(value = AnyFields.class)
-public @interface AnyField {
+@Repeatable(value = FloatFields.class)
+public @interface FloatField {
     String name() default "";
-    Class<? extends FieldFactory<?>> factory();
+    float value();
 }

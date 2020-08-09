@@ -1,4 +1,4 @@
-package com.github.dreamhead.bot;
+package com.github.dreamhead.bot.annotation;
 
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
@@ -9,8 +9,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target(FIELD)
 @Retention(RUNTIME)
-@Repeatable(value = LongFields.class)
-public @interface LongField {
+@Repeatable(value = IntFields.class)
+public @interface IntField {
     String name() default "";
-    long value();
+    int value();
 }

@@ -1,4 +1,4 @@
-package com.github.dreamhead.bot;
+package com.github.dreamhead.bot.annotation;
 
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;

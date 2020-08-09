@@ -1,6 +1,6 @@
 package com.github.dreamhead.bot.junit5;
 
-import com.github.dreamhead.bot.FieldFactory;
+import com.github.dreamhead.bot.annotation.FieldFactory;
 
 public class StringFieldValueFactory implements FieldFactory<String> {
     @Override
