@@ -11,9 +11,6 @@ class Foo {
   private String field1;
   private String field2;
   
-  public Foo() {
-  }
-  
   public Foo(String field1, String field2) {
     this.field1 = field1;
     this.field2 = field2;
@@ -32,12 +29,12 @@ class Foo {
 And the you could initialize all your test POJO in initializer. 
 
 ```java
-import com.github.dreamhead.bot.BotInitializer
+import com.github.dreamhead.bot.BotInitializer;
 
 public class FooBotInitializer implements BotInitializer {
     @Override
     public void initializer(final ObjectBot bot) {
-        // Give a name to identify your Pojo
+        // Give a name to identify your Pojo.
         bot.define("defaultFoo", new Foo("foo", "bar"));
     }
 }
@@ -49,6 +46,7 @@ Now you can use it in your test. Refer the following Junit 5 example.
 @ExtendWith(BotExtension.class)
 @BotWith(FooBotInitializer.class)
 public class FooTest {
+  // Use the name to identify your defined Pojo.
   @Bot("defaultFoo")
   private Foo foo;
   
@@ -66,12 +64,13 @@ The initialized field can be customized. You can modify a specific field with ne
 @BotWith(FooBotInitializer.class)
 public class ModifiedFooTest {
   @Bot(value = "defaultFoo")
-  @StringField(name = "field2", value="bar3")
+  // Customize field field2 with value blah 
+  @StringField(name = "field2", value="blah")
   private Foo foo;
   
   @Test
   public void should_get_foo() {
-    assertThat(foo.getField2(), is("bar3"));
+    assertThat(foo.getField2(), is("blah"));
   }
 }
 ```
