@@ -5,6 +5,7 @@ import com.github.dreamhead.bot.annotation.BooleanField;
 import com.github.dreamhead.bot.annotation.Bot;
 import com.github.dreamhead.bot.annotation.BotInitializer;
 import com.github.dreamhead.bot.annotation.BotWith;
+import com.github.dreamhead.bot.annotation.ByteField;
 import com.github.dreamhead.bot.annotation.CharField;
 import com.github.dreamhead.bot.annotation.DoubleField;
 import com.github.dreamhead.bot.annotation.FieldFactory;
@@ -34,6 +35,7 @@ public class RepeatableFieldTest implements BotInitializer {
         bot.define("charFields", new CharFieldsData('a', 'b'));
         bot.define("booleanFields", new BooleanFieldsData(true, true));
         bot.define("shortFields", new ShortFieldsData((short)-1, (short)-2));
+        bot.define("byteFields", new ByteFieldsData((byte)-1, (byte)-2));
     }
 
     @Bot("longFields")
@@ -135,6 +137,17 @@ public class RepeatableFieldTest implements BotInitializer {
         assertThat(shortFieldData.field2).isEqualTo((short)2);
     }
 
+    @Bot("byteFields")
+    @ByteField(name = "field1", value = 1)
+    @ByteField(name = "field2", value = 2)
+    private ByteFieldsData byteFieldData;
+
+    @Test
+    void should_have_byte_fields() {
+        assertThat(byteFieldData.field1).isEqualTo((byte)1);
+        assertThat(byteFieldData.field2).isEqualTo((byte)2);
+    }
+
     private static class LongFieldsData {
         private long field1;
         private long field2;
@@ -234,6 +247,16 @@ public class RepeatableFieldTest implements BotInitializer {
         private short field2;
 
         public ShortFieldsData(final short field1, final short field2) {
+            this.field1 = field1;
+            this.field2 = field2;
+        }
+    }
+
+    private static class ByteFieldsData {
+        private byte field1;
+        private byte field2;
+
+        public ByteFieldsData(final byte field1, final byte field2) {
             this.field1 = field1;
             this.field2 = field2;
         }
