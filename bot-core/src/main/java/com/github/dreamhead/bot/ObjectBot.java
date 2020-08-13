@@ -4,12 +4,11 @@ import com.github.dreamhead.bot.util.FieldEntry;
 import com.rits.cloning.Cloner;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 import static com.github.dreamhead.bot.reflection.ReflectionSupport.getDeclaredField;
 import static com.github.dreamhead.bot.reflection.ReflectionSupport.setFieldValue;
@@ -25,6 +24,7 @@ public class ObjectBot {
     }
 
     @SafeVarargs
+    @SuppressWarnings("unchecked")
     public final <T> T of(final String name, final Class<T> clazz, final FieldEntry<?>... entries) {
         Object object = container.get(name);
 
@@ -32,11 +32,6 @@ public class ObjectBot {
             throw new IllegalArgumentException("No Bot [" + name + "] found");
         }
 
-        return cloning(clazz, object, entries);
-    }
-
-    @SuppressWarnings("unchecked")
-    private <T> T cloning(final Class<T> clazz, final Object object, final FieldEntry<?>[] entries) {
         if (!clazz.isAssignableFrom(object.getClass())) {
             throw new IllegalArgumentException("Mismatch class [" + clazz.getName() + "] found");
         }
@@ -45,9 +40,13 @@ public class ObjectBot {
             return clazz.cast(object);
         }
 
+        return override((T) object, entries);
+    }
+
+    private <T> T override(final T object, final FieldEntry<?>[] entries) {
         validateEntries(entries);
-        T existing = (T) object;
-        T newObj = cloner.deepClone(existing);
+        T newObj = cloner.deepClone(object);
+        Class<?> clazz = object.getClass();
 
         for (FieldEntry<?> entry : entries) {
             String fieldName = entry.name();
@@ -63,12 +62,12 @@ public class ObjectBot {
     }
 
     private void validateEntries(final FieldEntry<?>[] entries) {
-        Set<String> set = new HashSet<>();
-        for (FieldEntry<?> entry : entries) {
-            set.add(entry.name());
-        }
+        long size = Arrays.stream(entries)
+                .map(FieldEntry::name)
+                .distinct()
+                .count();
 
-        if (set.size() < entries.length) {
+        if (size < entries.length) {
             throw new IllegalArgumentException("Duplicated name for entries is not allowed");
         }
     }
