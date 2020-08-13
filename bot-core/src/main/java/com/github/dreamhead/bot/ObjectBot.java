@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -24,22 +25,27 @@ public class ObjectBot {
     }
 
     @SafeVarargs
-    @SuppressWarnings("unchecked")
     public final <T> T of(final String name, final Class<T> clazz, final FieldEntry<?>... entries) {
         Object object = container.get(name);
 
+        if (Objects.isNull(object)) {
+            throw new IllegalArgumentException("No Bot [" + name + "] found");
+        }
+
+        return cloning(clazz, object, entries);
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> T cloning(final Class<T> clazz, final Object object, final FieldEntry<?>[] entries) {
         if (!clazz.isAssignableFrom(object.getClass())) {
-            throw new IllegalArgumentException("Mismatch class [" + clazz.getName() + "] found for Bot [" + name + "]");
+            throw new IllegalArgumentException("Mismatch class [" + clazz.getName() + "] found");
         }
 
         if (entries.length <= 0) {
             return clazz.cast(object);
-        } else {
-            validateEntries(entries);
         }
 
-
-
+        validateEntries(entries);
         T existing = (T) object;
         T newObj = cloner.deepClone(existing);
 
@@ -65,6 +71,5 @@ public class ObjectBot {
         if (set.size() < entries.length) {
             throw new IllegalArgumentException("Duplicated name for entries is not allowed");
         }
-
     }
 }

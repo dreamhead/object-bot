@@ -55,6 +55,13 @@ public class ObjectBotTest {
                         FieldEntry.of("field1", "foo1"),
                         FieldEntry.of("field1", "foo2")
                 ));
+    }
 
+    @Test
+    public void should_not_throw_exception_for_unknown_bot() {
+        assertThrows(IllegalArgumentException.class, () ->
+                bot.of("hello", Data.class,
+                        FieldEntry.of("field1", "foo2")
+                ));
     }
 }
