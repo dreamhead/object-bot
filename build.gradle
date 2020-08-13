@@ -94,7 +94,7 @@ subprojects {
 
 configure(subprojects - project(':bot-core')) {
     project.dependencies {
-        implementation(project(':bot-core'))
+        api(project(':bot-core'))
     }
 }
 
