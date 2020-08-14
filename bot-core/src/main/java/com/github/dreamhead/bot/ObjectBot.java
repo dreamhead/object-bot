@@ -15,7 +15,6 @@ import static com.github.dreamhead.bot.reflection.ReflectionSupport.setFieldValu
 
 public class ObjectBot {
     private Map<String, Object> container = new HashMap<>();
-    private final Cloner cloner = new Cloner();
 
     public final ObjectBot define(final String name,
                                   final Object object) {
@@ -43,9 +42,11 @@ public class ObjectBot {
         return override((T) object, entries);
     }
 
-    private <T> T override(final T object, final FieldEntry<?>[] entries) {
+    private static final Cloner CLONER = new Cloner();
+
+    public static <T> T override(final T object, final FieldEntry<?>... entries) {
         validateEntries(entries);
-        T newObj = cloner.deepClone(object);
+        T newObj = CLONER.deepClone(object);
         Class<?> clazz = object.getClass();
 
         for (FieldEntry<?> entry : entries) {
@@ -61,7 +62,7 @@ public class ObjectBot {
         return newObj;
     }
 
-    private void validateEntries(final FieldEntry<?>[] entries) {
+    private static void validateEntries(final FieldEntry<?>[] entries) {
         long size = Arrays.stream(entries)
                 .map(FieldEntry::name)
                 .distinct()

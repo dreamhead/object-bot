@@ -4,6 +4,7 @@ import com.github.dreamhead.bot.util.FieldEntry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static com.github.dreamhead.bot.ObjectBot.override;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -63,5 +64,12 @@ public class ObjectBotTest {
                 bot.of("hello", Data.class,
                         FieldEntry.of("field1", "foo2")
                 ));
+    }
+
+    @Test
+    public void should_override_fields_with_override_api() {
+        Data data = override(new Data("foo", "bar"), FieldEntry.of("field1", "foo1"));
+        assertThat(data.getField1()).isEqualTo("foo1");
+        assertThat(data.getField2()).isEqualTo("bar");
     }
 }
