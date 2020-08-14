@@ -75,7 +75,6 @@ public final class ReflectionSupport {
     public static <T, U> void setFieldValue(final T object, final Field field, final U value) {
         requireNonNull(object, "Object must not be null");
         requireNonNull(field, "Field must not be null");
-        requireNonNull(value, "Value must not be null");
 
         withAccessible(field, accessible -> {
             try {
