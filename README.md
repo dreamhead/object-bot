@@ -26,7 +26,7 @@ class Foo {
 }
 ```
 
-And the you could initialize all your test POJO in initializer. 
+And the you could initialize all your test POJOs in initializer. 
 
 ```java
 import com.github.dreamhead.bot.annotation.BotInitializer;
@@ -40,13 +40,16 @@ public class FooBotInitializer implements BotInitializer {
 }
 ```
 
-Now you can use it in your test. Refer the following Junit 5 example.
+Now you can use it in your test. Refer to the following Junit 5 example.
 
 ```java
+// Run BotExtension
 @ExtendWith(BotExtension.class)
+// All test POJOs are initialized with FooBotInitializer. 
 @BotWith(FooBotInitializer.class)
 public class FooTest {
   // Use the name to identify your defined Pojo.
+  // It will be injected for each test.
   @Bot("defaultFoo")
   private Foo foo;
   
@@ -75,3 +78,18 @@ public class ModifiedFooTest {
 }
 ```
 
+If the field customization only affects a single test, `override` API can be used.
+
+```java
+@ExtendWith(BotExtension.class)
+@BotWith(FooBotInitializer.class)
+public class FooTest {
+  @Bot("defaultFoo")
+  private Foo foo;
+  
+  @Test
+  public void should_get_foo() {
+    Foo newFoo = override(foo, FieldEntry.of("field2", "blah"));
+    assertThat(newFoo.getField2(), is("blah"));
+  }
+}
