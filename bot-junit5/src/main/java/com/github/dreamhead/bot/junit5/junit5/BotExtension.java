@@ -59,7 +59,7 @@ public class BotExtension implements BeforeAllCallback, AfterAllCallback, TestIn
 
     private List<FieldEntry<Object>> getModifiers(final Field field) {
         List<FieldEntry<Object>> stringModifiers = getModifiers(field, StringField.class,
-                annotation -> FieldEntry.of(annotation.name(), annotation.value()));
+                annotation -> FieldEntry.name(annotation.name()).value(annotation.value()));
         List<FieldEntry<Object>> longModifiers = getModifiers(field, LongField.class,
                 annotation -> FieldEntry.of(annotation.name(), annotation.value()));
         List<FieldEntry<Object>> intModifiers = getModifiers(field, IntField.class,
