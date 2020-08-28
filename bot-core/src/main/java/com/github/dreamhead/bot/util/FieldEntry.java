@@ -17,11 +17,7 @@ public final class FieldEntry<T> {
         return value;
     }
 
-    public static <T> FieldEntry<T> of(final String name, final T value) {
-        return new FieldEntry<>(name, value);
-    }
-
-    public static FieldEntryBuilder name(String name) {
+    public static FieldEntryBuilder name(final String name) {
         return new FieldEntryBuilder(name);
     }
 
@@ -32,7 +28,7 @@ public final class FieldEntry<T> {
             this.name = name;
         }
 
-        public <T> FieldEntry<T> value(T value) {
+        public <T> FieldEntry<T> value(final T value) {
             return new FieldEntry<>(name, value);
         }
     }

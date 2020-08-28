@@ -33,6 +33,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import static com.github.dreamhead.bot.ObjectBot.field;
 import static com.github.dreamhead.bot.reflection.ReflectionSupport.findAnnotatedFields;
 import static com.github.dreamhead.bot.reflection.ReflectionSupport.findAnnotation;
 import static com.github.dreamhead.bot.reflection.ReflectionSupport.newInstance;
@@ -59,25 +60,25 @@ public class BotExtension implements BeforeAllCallback, AfterAllCallback, TestIn
 
     private List<FieldEntry<Object>> getModifiers(final Field field) {
         List<FieldEntry<Object>> stringModifiers = getModifiers(field, StringField.class,
-                annotation -> FieldEntry.name(annotation.name()).value(annotation.value()));
+                annotation -> field(annotation.name()).value(annotation.value()));
         List<FieldEntry<Object>> longModifiers = getModifiers(field, LongField.class,
-                annotation -> FieldEntry.of(annotation.name(), annotation.value()));
+                annotation -> field(annotation.name()).value(annotation.value()));
         List<FieldEntry<Object>> intModifiers = getModifiers(field, IntField.class,
-                annotation -> FieldEntry.of(annotation.name(), annotation.value()));
+                annotation -> field(annotation.name()).value(annotation.value()));
         List<FieldEntry<Object>> doubleModifiers = getModifiers(field, DoubleField.class,
-                annotation -> FieldEntry.of(annotation.name(), annotation.value()));
+                annotation -> field(annotation.name()).value(annotation.value()));
         List<FieldEntry<Object>> floatModifiers = getModifiers(field, FloatField.class,
-                annotation -> FieldEntry.of(annotation.name(), annotation.value()));
+                annotation -> field(annotation.name()).value(annotation.value()));
         List<FieldEntry<Object>> charModifiers = getModifiers(field, CharField.class,
-                annotation -> FieldEntry.of(annotation.name(), annotation.value()));
+                annotation -> field(annotation.name()).value(annotation.value()));
         List<FieldEntry<Object>> booleanModifiers = getModifiers(field, BooleanField.class,
-                annotation -> FieldEntry.of(annotation.name(), annotation.value()));
+                annotation -> field(annotation.name()).value(annotation.value()));
         List<FieldEntry<Object>> shortModifiers = getModifiers(field, ShortField.class,
-                annotation -> FieldEntry.of(annotation.name(), annotation.value()));
+                annotation -> field(annotation.name()).value(annotation.value()));
         List<FieldEntry<Object>> byteModifiers = getModifiers(field, ByteField.class,
-                annotation -> FieldEntry.of(annotation.name(), annotation.value()));
+                annotation -> field(annotation.name()).value(annotation.value()));
         List<FieldEntry<Object>> classModifiers = getModifiers(field, ClassField.class,
-                annotation -> FieldEntry.of(annotation.name(), annotation.value()));
+                annotation -> field(annotation.name()).value(annotation.value()));
 
         List<FieldEntry<Object>> anyModifiers = getModifiers(field, AnyField.class,
                 this::getAnyValue);
@@ -91,7 +92,7 @@ public class BotExtension implements BeforeAllCallback, AfterAllCallback, TestIn
 
     private FieldEntry<Object> getAnyValue(final AnyField annotation) {
         Class<? extends FieldFactory<?>> factory = annotation.factory();
-        return FieldEntry.of(annotation.name(), newInstance(factory).getValue());
+        return field(annotation.name()).value(newInstance(factory).getValue());
     }
 
     @SuppressWarnings("unchecked")

@@ -35,14 +35,14 @@ public class ObjectBot {
             throw new IllegalArgumentException("Mismatch class [" + clazz.getName() + "] found for [" + name + "]");
         }
 
-        if (entries.length <= 0) {
-            return clazz.cast(object);
-        }
-
         return override((T) object, entries);
     }
 
     private static final Cloner CLONER = new Cloner();
+
+    public static FieldEntry.FieldEntryBuilder field(final String name) {
+        return FieldEntry.name(name);
+    }
 
     public static <T> T override(final T object, final FieldEntry<?>... entries) {
         validateEntries(entries);

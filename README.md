@@ -26,7 +26,7 @@ class Foo {
 }
 ```
 
-And the you could initialize all your test POJOs in initializer. 
+And then you could initialize all your test POJOs in initializer. 
 
 ```java
 import com.github.dreamhead.bot.annotation.BotInitializer;
@@ -89,7 +89,7 @@ public class FooTest {
   
   @Test
   public void should_get_foo() {
-    Foo newFoo = override(foo, FieldEntry.of("field2", "blah"));
+    Foo newFoo = override(foo, field("field2").value("blah"));
     assertThat(newFoo.getField2(), is("blah"));
   }
 }
