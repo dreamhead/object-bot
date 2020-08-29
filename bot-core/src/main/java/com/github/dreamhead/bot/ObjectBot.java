@@ -22,7 +22,6 @@ public class ObjectBot {
         return this;
     }
 
-    @SafeVarargs
     @SuppressWarnings("unchecked")
     public final <T> T of(final String name, final Class<T> clazz, final FieldEntry<?>... entries) {
         Object object = container.get(name);
