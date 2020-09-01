@@ -97,4 +97,3 @@ configure(subprojects - project(':bot-core')) {
         api(project(':bot-core'))
     }
 }
-

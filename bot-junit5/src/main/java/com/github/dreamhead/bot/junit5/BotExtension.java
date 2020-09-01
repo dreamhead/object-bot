@@ -1,4 +1,4 @@
-package com.github.dreamhead.bot.junit5.junit5;
+package com.github.dreamhead.bot.junit5;
 
 import com.github.dreamhead.bot.annotation.AnyField;
 import com.github.dreamhead.bot.annotation.BooleanField;

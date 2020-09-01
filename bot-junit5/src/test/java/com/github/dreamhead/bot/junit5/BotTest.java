@@ -6,7 +6,6 @@ import com.github.dreamhead.bot.annotation.BotWith;
 import com.github.dreamhead.bot.annotation.IntField;
 import com.github.dreamhead.bot.annotation.LongField;
 import com.github.dreamhead.bot.annotation.StringField;
-import com.github.dreamhead.bot.junit5.junit5.BotExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
