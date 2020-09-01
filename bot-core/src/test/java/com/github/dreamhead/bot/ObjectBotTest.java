@@ -82,4 +82,21 @@ public class ObjectBotTest {
         assertThat(fetched.getField2()).isEqualTo(original.getField2());
         assertThat(fetched).isNotSameAs(original);
     }
+
+    @Test
+    public void should_override_fields_from_base_with_override_api() {
+        SubData data = override(new SubData("foo", "bar", "blah"),
+                field("field1").value("foo1"));
+        assertThat(data.getField1()).isEqualTo("foo1");
+        assertThat(data.getField2()).isEqualTo("bar");
+        assertThat(data.getField3()).isEqualTo("blah");
+    }
+
+    @Test
+    public void should_throw_exception_for_unknown_field_with_override_api() {
+        assertThrows(IllegalArgumentException.class, () ->
+                override(new SubData("foo", "bar", "blah"),
+                        field("unknown").value("foo1"))
+        );
+    }
 }

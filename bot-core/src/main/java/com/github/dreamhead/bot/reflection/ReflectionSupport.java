@@ -66,9 +66,13 @@ public final class ReflectionSupport {
 
     public static <T> Optional<Field> getDeclaredField(final Class<T> clazz, final String name) {
         try {
+            if (Object.class.equals(clazz)) {
+                return Optional.empty();
+            }
+
             return Optional.of(clazz.getDeclaredField(name));
         } catch (NoSuchFieldException e) {
-            return Optional.empty();
+            return getDeclaredField(clazz.getSuperclass(), name);
         }
     }
 
