@@ -2,6 +2,33 @@
 
 Object bot is a library for setting up Java objects as test data, which is inspired by [Factory Bot](https://github.com/thoughtbot/factory_bot).
 
+## Latest Release
+**1.0.0**
+
+More details in [Release Notes](bot-doc/ReleaseNotes.md).
+
+## Object Bot in Your Build
+
+To add a dependency on Object Bot using Maven, use the following:
+
+```xml
+<dependency>
+  <groupId>com.github.dreamhead</groupId>
+  <artifactId>bot-junit5</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+
+To add a dependency using Gradle:
+
+```groovy
+dependencies {
+  testImplementation(
+    "com.github.dreamhead:bot-junit5:1.0.0",
+  )
+}
+```
+
 ## Quick Start
 
 You have a POJO as your test data
@@ -26,7 +53,7 @@ class Foo {
 }
 ```
 
-And then you could initialize all your test POJOs in initializer. 
+And then you could initialize all your test POJOs in an initializer. 
 
 ```java
 import com.github.dreamhead.bot.annotation.BotInitializer;
@@ -78,7 +105,7 @@ public class ModifiedFooTest {
 }
 ```
 
-If the field customization only affects a single test, `override` API can be used.
+If the field customization only affects a single test, `override` API could be used.
 
 ```java
 @ExtendWith(BotExtension.class)
