@@ -1,6 +1,7 @@
 allprojects {
     apply plugin: 'java-library'
     apply plugin: 'idea'
+    apply plugin: 'signing'
     apply plugin: 'maven-publish'
 }
 
@@ -21,7 +22,7 @@ idea {
 }
 
 subprojects {
-    group = 'com.github.dreamhead.bot'
+    group = 'com.github.dreamhead'
     version = '1.0.0-SNAPSHOT'
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -29,6 +30,11 @@ subprojects {
     tasks.withType(JavaCompile) {
         options.compilerArgs << "-Xlint:unchecked"
         options.compilerArgs << "-Xlint:deprecation"
+    }
+
+    java {
+        withSourcesJar()
+        withJavadocJar()
     }
 
     repositories {
@@ -88,6 +94,23 @@ subprojects {
                     password = sonatypePassword
                 }
             }
+        }
+    }
+
+    signing {
+        sign publishing.publications.mavenJava
+    }
+
+    project.jar {
+        manifest {
+            attributes 'Package': "com.github.dreamhead",
+                    'Implementation-Title': "${project.name}",
+                    'Implementation-Version': "${archiveVersion.get()}",
+                    'Implementation-Vendor': 'Zheng Ye',
+                    'Built-By': 'Zheng Ye',
+                    'Built-Date': new Date().getDateTimeString(),
+                    'Built-With': "gradle-${project.getGradle().getGradleVersion()}, groovy-${GroovySystem.getVersion()}",
+                    'Created-By': 'Java ' + System.getProperty('java.version') + ' (' + System.getProperty('java.vendor') + ')'
         }
     }
 }
