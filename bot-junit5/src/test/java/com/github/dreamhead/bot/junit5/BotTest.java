@@ -55,4 +55,13 @@ public class BotTest {
     public void should_get_data_with_ant_field() {
         assertThat(data4.getField1()).isEqualTo("string");
     }
+
+    @Bot
+    private Data defaultData;
+
+    @Test
+    public void should_get_bot_with_filed_name() {
+        assertThat(defaultData.getField1()).isEqualTo("foo");
+        assertThat(defaultData.getField2()).isEqualTo("bar");
+    }
 }

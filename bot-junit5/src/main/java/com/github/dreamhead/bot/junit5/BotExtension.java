@@ -17,6 +17,7 @@ import com.github.dreamhead.bot.ObjectBot;
 import com.github.dreamhead.bot.annotation.ShortField;
 import com.github.dreamhead.bot.annotation.StringField;
 import com.github.dreamhead.bot.util.FieldEntry;
+import com.google.common.base.Strings;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -53,9 +54,18 @@ public class BotExtension implements BeforeAllCallback, AfterAllCallback, TestIn
         for (Field field : fields) {
             Bot annotation = field.getAnnotation(Bot.class);
             List<FieldEntry<Object>> pairs = getModifiers(field);
-            Object value = bot.of(annotation.value(), field.getType(), pairs.toArray(new FieldEntry[0]));
+            Object value = bot.of(asBotName(annotation, field), field.getType(), pairs.toArray(new FieldEntry[0]));
             setFieldValue(testInstance, field, value);
         }
+    }
+
+    private String asBotName(final Bot annotation, final Field field) {
+        final String name = annotation.value();
+        if (Strings.isNullOrEmpty(name)) {
+            return field.getName();
+        }
+
+        return name;
     }
 
     private List<FieldEntry<Object>> getModifiers(final Field field) {

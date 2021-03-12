@@ -1,3 +1,8 @@
+# Release
+
+## JUnit 5
+* anonymous `Bot` use field name as Bot name. 
+
 # Release 1.0.0 (1-Sep-2020)
 
 ## API
