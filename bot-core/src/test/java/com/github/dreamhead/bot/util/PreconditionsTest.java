@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.github.dreamhead.bot.util.Preconditions.checkNotNullElements;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PreconditionsTest {
     @Test
@@ -16,8 +16,6 @@ class PreconditionsTest {
         notNullElements[0] = "123";
         String[] result = checkNotNullElements(notNullElements, "");
         assertThat(result[0]).isEqualTo("123");
-
-        String[] nullArray = null;
-        assertThat(checkNotNullElements(null, "")).isNull();
+        assertThat(checkNotNullElements((String[])null, "")).isNull();
     }
 }

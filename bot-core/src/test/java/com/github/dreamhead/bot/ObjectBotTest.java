@@ -3,6 +3,8 @@ package com.github.dreamhead.bot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.ZonedDateTime;
+
 import static com.github.dreamhead.bot.ObjectBot.field;
 import static com.github.dreamhead.bot.ObjectBot.override;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -97,5 +99,13 @@ public class ObjectBotTest {
                 override(new SubData("foo", "bar", "blah"),
                         field("unknown").value("foo1"))
         );
+    }
+
+    @Test
+    public void should_override_zoned_date_time_field() {
+        ZonedDateTime now = ZonedDateTime.now();
+        ZonedDateTimeData data = override(new ZonedDateTimeData(now.minusDays(1), "zoned"),
+                field("field1").value(now));
+        assertThat(data.getField1()).isEqualTo(now);
     }
 }

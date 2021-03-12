@@ -4,6 +4,7 @@ import com.github.dreamhead.bot.util.FieldEntry;
 import com.rits.cloning.Cloner;
 
 import java.lang.reflect.Field;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +38,12 @@ public class ObjectBot {
         return override((T) object, entries);
     }
 
-    private static final Cloner CLONER = new Cloner();
+    private static final Cloner CLONER;
+
+    static {
+        CLONER = new Cloner();
+        CLONER.registerImmutable(ZonedDateTime.class);
+    }
 
     public static FieldEntry.FieldEntryBuilder field(final String name) {
         return FieldEntry.name(name);
