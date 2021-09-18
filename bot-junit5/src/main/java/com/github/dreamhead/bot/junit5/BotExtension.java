@@ -124,7 +124,7 @@ public class BotExtension implements BeforeAllCallback, AfterAllCallback, TestIn
         Class<? extends BotInitializer>[] factories = botWith.value();
         BotInitializer initializer = newInstance(factories[0]);
         ObjectBot bot = new ObjectBot();
-        initializer.initializer(bot);
+        initializer.initialize(bot);
         return bot;
     }
 

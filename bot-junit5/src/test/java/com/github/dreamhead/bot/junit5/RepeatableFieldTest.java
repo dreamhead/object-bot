@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @BotWith(RepeatableFieldTest.class)
 public class RepeatableFieldTest implements BotInitializer {
     @Override
-    public void initializer(final ObjectBot bot) {
+    public void initialize(final ObjectBot bot) {
         bot.define("longFields", new LongFieldsData(1, 2));
         bot.define("intFields", new IntFieldsData(1, 2));
         bot.define("stringFields", new StringFieldsData("foo1", "foo2"));
