@@ -1,5 +1,7 @@
 package com.github.dreamhead.bot.annotation;
 
+import com.github.dreamhead.bot.BotInitializer;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

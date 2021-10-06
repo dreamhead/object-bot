@@ -56,7 +56,7 @@ class Foo {
 And then you could initialize all your test POJOs in an initializer. 
 
 ```java
-import com.github.dreamhead.bot.annotation.BotInitializer;
+import com.github.dreamhead.bot.BotInitializer;
 
 public class FooBotInitializer implements BotInitializer {
     @Override

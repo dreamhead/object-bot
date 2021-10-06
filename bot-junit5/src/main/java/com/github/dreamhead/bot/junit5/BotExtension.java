@@ -3,7 +3,7 @@ package com.github.dreamhead.bot.junit5;
 import com.github.dreamhead.bot.annotation.AnyField;
 import com.github.dreamhead.bot.annotation.BooleanField;
 import com.github.dreamhead.bot.annotation.Bot;
-import com.github.dreamhead.bot.annotation.BotInitializer;
+import com.github.dreamhead.bot.BotInitializer;
 import com.github.dreamhead.bot.annotation.BotWith;
 import com.github.dreamhead.bot.annotation.ByteField;
 import com.github.dreamhead.bot.annotation.CharField;

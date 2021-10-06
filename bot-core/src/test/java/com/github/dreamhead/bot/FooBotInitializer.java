@@ -1,7 +1,5 @@
 package com.github.dreamhead.bot;
 
-import com.github.dreamhead.bot.annotation.BotInitializer;
-
 public class FooBotInitializer implements BotInitializer {
     @Override
     public void initialize(final ObjectBot bot) {
