@@ -1,5 +1,8 @@
 package com.github.dreamhead.bot;
 
+import com.github.dreamhead.bot.internal.ClassSlot;
+import com.github.dreamhead.bot.internal.ObjectSlot;
+import com.github.dreamhead.bot.internal.Slot;
 import com.github.dreamhead.bot.util.FieldEntry;
 import com.rits.cloning.Cloner;
 
@@ -15,27 +18,34 @@ import static com.github.dreamhead.bot.reflection.ReflectionSupport.getDeclaredF
 import static com.github.dreamhead.bot.reflection.ReflectionSupport.setFieldValue;
 
 public class ObjectBot {
-    private Map<String, Object> container = new HashMap<>();
+    private Map<String, Slot> container = new HashMap<>();
 
     public final ObjectBot define(final String name,
                                   final Object object) {
-        container.put(name, object);
+        container.put(name, new ObjectSlot(object));
+        return this;
+    }
+
+    public final ObjectBot define(final String name, final Class<?> clazz) {
+        container.put(name, new ClassSlot(clazz));
         return this;
     }
 
     @SuppressWarnings("unchecked")
-    public final <T> T of(final String name, final Class<T> clazz, final FieldEntry<?>... entries) {
-        Object object = container.get(name);
+    public final <T> T of(final String name, final Class<T> clazz, final FieldEntry<?>... fields) {
+        Slot slot = container.get(name);
 
-        if (Objects.isNull(object)) {
+        if (Objects.isNull(slot)) {
             throw new IllegalArgumentException("No Bot [" + name + "] found");
         }
 
-        if (!clazz.isAssignableFrom(object.getClass())) {
+        if (!clazz.isAssignableFrom(slot.getEntryClass())) {
             throw new IllegalArgumentException("Mismatch class [" + clazz.getName() + "] found for [" + name + "]");
         }
 
-        return override((T) object, entries);
+        Object entry = slot.getEntry();
+
+        return override((T) entry, fields);
     }
 
     private static final Cloner CLONER;
