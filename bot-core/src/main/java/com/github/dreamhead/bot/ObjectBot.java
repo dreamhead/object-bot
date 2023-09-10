@@ -27,7 +27,11 @@ public class ObjectBot {
     }
 
     public final ObjectBot define(final String name, final Class<?> clazz) {
-        container.put(name, new ClassSlot(clazz));
+        return define(name, clazz, FieldFillStrategy.RANDOM);
+    }
+
+    public final ObjectBot define(final String name, final Class<?> clazz, final FieldFillStrategy strategy) {
+        container.put(name, new ClassSlot(clazz, strategy));
         return this;
     }
 
@@ -64,17 +68,21 @@ public class ObjectBot {
         T newObj = CLONER.deepClone(object);
         Class<?> clazz = object.getClass();
 
+        return internalOverride(newObj, clazz, entries);
+    }
+
+    private static <T> T internalOverride(final T target, final Class<?> clazz, final FieldEntry<?>[] entries) {
         for (FieldEntry<?> entry : entries) {
             String fieldName = entry.name();
             Optional<Field> field = getDeclaredField(clazz, fieldName);
             if (field.isPresent()) {
-                setFieldValue(newObj, field.get(), entry.value());
+                setFieldValue(target, field.get(), entry.value());
             } else {
                 throw new IllegalArgumentException("No field [" + fieldName + "] found");
             }
         }
 
-        return newObj;
+        return target;
     }
 
     private static void validateEntries(final FieldEntry<?>[] entries) {

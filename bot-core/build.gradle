@@ -1,5 +1,6 @@
 dependencies {
     implementation("io.github.kostaskougios:cloning:$cloningVersion")
+    implementation("org.apache.commons:commons-lang3:$commonsLangVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
 }

@@ -24,4 +24,15 @@ public class ClassObjectBotTest {
         assertThat(data.getField1()).isEqualTo("foo");
         assertThat(data.getField2()).isEqualTo("bar");
     }
+
+    @Test
+    public void should_define_class_with_random_field_value() {
+        bot.define("hello", Data.class, FieldFillStrategy.RANDOM)
+                .define("world", Data.class);
+        Data data = bot.of("hello", Data.class);
+        assertThat(data.getField1()).isNotNull();
+        assertThat(data.getField2()).isNotNull();
+    }
+
+
 }
