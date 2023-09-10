@@ -46,6 +46,7 @@ public final class ReflectionSupport {
         });
     }
 
+    @SuppressWarnings("deprecation")
     public static <T extends AccessibleObject, U> U withAccessible(final T object, final Function<T, U> function) {
         requireNonNull(object, "Accessible object must not be null");
         requireNonNull(function, "Function must not be null");

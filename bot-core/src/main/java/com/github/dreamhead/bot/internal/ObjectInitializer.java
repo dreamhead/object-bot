@@ -5,14 +5,13 @@ import org.objenesis.ObjenesisStd;
 
 public class ObjectInitializer {
     private static final ObjectInitializer INSTANCE = new ObjectInitializer(
-            new ObjenesisInstantiationStrategy(new ObjenesisStd()), new ObjectFiller());
+            new ObjenesisInstantiationStrategy(new ObjenesisStd()));
     private ObjenesisInstantiationStrategy strategy;
     private ObjectFiller filler;
 
-    public ObjectInitializer(final ObjenesisInstantiationStrategy strategy,
-                             final ObjectFiller filler) {
+    public ObjectInitializer(final ObjenesisInstantiationStrategy strategy) {
         this.strategy = strategy;
-        this.filler = filler;
+        this.filler = new ObjectFiller(strategy);
     }
 
     public Object newInstance(final Class<?> clazz, final FieldFillStrategy filedValueStrategy) {

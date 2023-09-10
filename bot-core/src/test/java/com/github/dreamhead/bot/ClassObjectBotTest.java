@@ -34,5 +34,11 @@ public class ClassObjectBotTest {
         assertThat(data.getField2()).isNotNull();
     }
 
-
+    @Test
+    public void should_define_class_with_random_field_value_for_customized_field() {
+        bot.define("hello", BigData.class, FieldFillStrategy.RANDOM);
+        BigData data = bot.of("hello", BigData.class);
+        assertThat(data.getData().getField1()).isNotNull();
+        assertThat(data.getData().getField2()).isNotNull();
+    }
 }
