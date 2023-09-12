@@ -5,6 +5,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Random;
 
 import static com.github.dreamhead.bot.reflection.ReflectionSupport.setFieldValue;
 
@@ -20,6 +21,11 @@ public class ObjectFiller {
     public Object newValue(final Class<?> clazz, final FieldFillStrategy fillStrategy) {
         if (clazz == String.class) {
             return RandomStringUtils.randomAlphabetic(DEFAULT_LENGTH);
+        }
+
+        if (clazz == Integer.TYPE) {
+            Random rand = new Random();
+            return rand.nextInt();
         }
 
         Object filedValue = this.strategy.newInstance(clazz);

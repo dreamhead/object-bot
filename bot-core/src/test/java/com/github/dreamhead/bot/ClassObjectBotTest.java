@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.github.dreamhead.bot.ObjectBot.field;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.not;
 
 public class ClassObjectBotTest {
     private ObjectBot bot;
@@ -40,5 +41,6 @@ public class ClassObjectBotTest {
         BigData data = bot.of("hello", BigData.class);
         assertThat(data.getData().getField1()).isNotNull();
         assertThat(data.getData().getField2()).isNotNull();
+        assertThat(data.getIntValue()).isNotZero();
     }
 }
