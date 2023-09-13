@@ -4,6 +4,8 @@ public class BigData {
     private Data data;
     private int intValue;
 
+    private double doubleValue;
+
     public BigData(final Data data) {
         this.data = data;
     }
@@ -14,5 +16,9 @@ public class BigData {
 
     public int getIntValue() {
         return intValue;
+    }
+
+    public double getDoubleValue() {
+        return doubleValue;
     }
 }

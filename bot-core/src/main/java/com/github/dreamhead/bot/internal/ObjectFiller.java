@@ -13,6 +13,7 @@ public class ObjectFiller {
 
     public static final int DEFAULT_LENGTH = 10;
     private final ObjenesisInstantiationStrategy strategy;
+    private final Random rand = new Random();
 
     public ObjectFiller(final ObjenesisInstantiationStrategy strategy) {
         this.strategy = strategy;
@@ -24,8 +25,11 @@ public class ObjectFiller {
         }
 
         if (clazz == Integer.TYPE) {
-            Random rand = new Random();
             return rand.nextInt();
+        }
+
+        if (clazz == Double.TYPE) {
+            return rand.nextDouble();
         }
 
         Object filedValue = this.strategy.newInstance(clazz);
