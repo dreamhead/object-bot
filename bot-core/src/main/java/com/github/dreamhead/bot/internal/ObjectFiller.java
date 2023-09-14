@@ -32,6 +32,10 @@ public class ObjectFiller {
             return rand.nextDouble();
         }
 
+        if (clazz == Long.TYPE) {
+            return rand.nextLong();
+        }
+
         Object filedValue = this.strategy.newInstance(clazz);
         return fill(filedValue, fillStrategy);
     }
