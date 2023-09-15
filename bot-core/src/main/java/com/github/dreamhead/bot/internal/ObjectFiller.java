@@ -36,6 +36,10 @@ public class ObjectFiller {
             return rand.nextLong();
         }
 
+        if (clazz == Float.TYPE) {
+            return rand.nextFloat();
+        }
+
         Object filedValue = this.strategy.newInstance(clazz);
         return fill(filedValue, fillStrategy);
     }

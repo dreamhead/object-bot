@@ -7,6 +7,8 @@ public class BigData {
 
     private long longValue;
 
+    private float floatValue;
+
     public BigData(final Data data) {
         this.data = data;
     }
@@ -25,5 +27,9 @@ public class BigData {
 
     public long getLongValue() {
         return longValue;
+    }
+
+    public float getFloatValue() {
+        return floatValue;
     }
 }
