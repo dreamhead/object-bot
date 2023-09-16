@@ -9,6 +9,8 @@ public class BigData {
 
     private float floatValue;
 
+    private char charValue;
+
     public BigData(final Data data) {
         this.data = data;
     }
@@ -31,5 +33,9 @@ public class BigData {
 
     public float getFloatValue() {
         return floatValue;
+    }
+
+    public char getCharValue() {
+        return charValue;
     }
 }

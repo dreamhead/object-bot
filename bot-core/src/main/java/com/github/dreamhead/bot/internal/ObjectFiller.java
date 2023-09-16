@@ -11,7 +11,8 @@ import static com.github.dreamhead.bot.reflection.ReflectionSupport.setFieldValu
 
 public class ObjectFiller {
 
-    public static final int DEFAULT_LENGTH = 10;
+    private static final int DEFAULT_LENGTH = 10;
+    private static final int ALPHABETIC_LENGTH = 26;
     private final ObjenesisInstantiationStrategy strategy;
     private final Random rand = new Random();
 
@@ -21,7 +22,7 @@ public class ObjectFiller {
 
     public Object newValue(final Class<?> clazz, final FieldFillStrategy fillStrategy) {
         if (clazz == String.class) {
-            return RandomStringUtils.randomAlphabetic(DEFAULT_LENGTH);
+            return RandomStringUtils.randomAlphanumeric(DEFAULT_LENGTH);
         }
 
         if (clazz == Integer.TYPE) {
@@ -38,6 +39,10 @@ public class ObjectFiller {
 
         if (clazz == Float.TYPE) {
             return rand.nextFloat();
+        }
+
+        if (clazz == Character.TYPE) {
+            return (char) (rand.nextInt(ALPHABETIC_LENGTH) + 'a');
         }
 
         Object filedValue = this.strategy.newInstance(clazz);
