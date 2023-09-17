@@ -45,6 +45,10 @@ public class ObjectFiller {
             return (char) (rand.nextInt(ALPHABETIC_LENGTH) + 'a');
         }
 
+        if (clazz == Short.TYPE) {
+            return (short) rand.nextInt(Short.MAX_VALUE);
+        }
+
         Object filedValue = this.strategy.newInstance(clazz);
         return fill(filedValue, fillStrategy);
     }

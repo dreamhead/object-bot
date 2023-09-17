@@ -11,6 +11,8 @@ public class BigData {
 
     private char charValue;
 
+    private short shortValue;
+
     public BigData(final Data data) {
         this.data = data;
     }
@@ -37,5 +39,9 @@ public class BigData {
 
     public char getCharValue() {
         return charValue;
+    }
+
+    public short getShortValue() {
+        return shortValue;
     }
 }
