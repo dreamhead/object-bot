@@ -49,6 +49,12 @@ public class ObjectFiller {
             return (short) rand.nextInt(Short.MAX_VALUE);
         }
 
+        if (clazz == Byte.TYPE) {
+            byte[] bytes = new byte[1];
+            rand.nextBytes(bytes);
+            return bytes[0];
+        }
+
         Object filedValue = this.strategy.newInstance(clazz);
         return fill(filedValue, fillStrategy);
     }

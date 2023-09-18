@@ -13,6 +13,8 @@ public class BigData {
 
     private short shortValue;
 
+    private byte byteValue;
+
     public BigData(final Data data) {
         this.data = data;
     }
@@ -43,5 +45,9 @@ public class BigData {
 
     public short getShortValue() {
         return shortValue;
+    }
+
+    public byte getByteValue() {
+        return byteValue;
     }
 }
