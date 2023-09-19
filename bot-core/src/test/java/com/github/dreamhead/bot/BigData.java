@@ -15,6 +15,8 @@ public class BigData {
 
     private byte byteValue;
 
+    private boolean booleanValue;
+
     public BigData(final Data data) {
         this.data = data;
     }
@@ -49,5 +51,9 @@ public class BigData {
 
     public byte getByteValue() {
         return byteValue;
+    }
+
+    public boolean isBooleanValue() {
+        return booleanValue;
     }
 }

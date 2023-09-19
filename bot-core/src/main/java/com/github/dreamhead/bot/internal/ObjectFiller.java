@@ -55,6 +55,10 @@ public class ObjectFiller {
             return bytes[0];
         }
 
+        if (clazz == Boolean.TYPE) {
+            return rand.nextBoolean();
+        }
+
         Object filedValue = this.strategy.newInstance(clazz);
         return fill(filedValue, fillStrategy);
     }
