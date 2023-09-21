@@ -3,6 +3,9 @@ package com.github.dreamhead.bot;
 public class BigData {
     private Data data;
     private int intValue;
+
+    private Integer integerValue;
+
     private double doubleValue;
 
     private long longValue;
@@ -27,6 +30,10 @@ public class BigData {
 
     public int getIntValue() {
         return intValue;
+    }
+
+    public Integer getIntegerValue() {
+        return integerValue;
     }
 
     public double getDoubleValue() {

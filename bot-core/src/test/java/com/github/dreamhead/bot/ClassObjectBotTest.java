@@ -42,6 +42,7 @@ public class ClassObjectBotTest {
         assertThat(data.getData().getField1()).isNotNull();
         assertThat(data.getData().getField2()).isNotNull();
         assertThat(data.getIntValue()).isNotZero();
+        assertThat(data.getIntegerValue()).isNotNull();
         assertThat(data.getDoubleValue()).isNotZero();
         assertThat(data.getLongValue()).isNotZero();
         assertThat(data.getFloatValue()).isNotZero();

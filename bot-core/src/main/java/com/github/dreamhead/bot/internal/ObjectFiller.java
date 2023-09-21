@@ -25,7 +25,7 @@ public class ObjectFiller {
             return RandomStringUtils.randomAlphanumeric(DEFAULT_LENGTH);
         }
 
-        if (clazz == Integer.TYPE) {
+        if (clazz == Integer.TYPE || clazz == Integer.class) {
             return rand.nextInt();
         }
 
@@ -58,6 +58,8 @@ public class ObjectFiller {
         if (clazz == Boolean.TYPE) {
             return rand.nextBoolean();
         }
+
+
 
         Object filedValue = this.strategy.newInstance(clazz);
         return fill(filedValue, fillStrategy);
