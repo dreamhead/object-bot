@@ -8,6 +8,8 @@ public class BigData {
 
     private double doubleValue;
 
+    private Double aDoubleValue;
+
     private long longValue;
 
     private float floatValue;
@@ -38,6 +40,10 @@ public class BigData {
 
     public double getDoubleValue() {
         return doubleValue;
+    }
+
+    public Double getADoubleValue() {
+        return aDoubleValue;
     }
 
     public long getLongValue() {

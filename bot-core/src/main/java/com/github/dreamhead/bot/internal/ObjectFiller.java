@@ -29,7 +29,7 @@ public class ObjectFiller {
             return rand.nextInt();
         }
 
-        if (clazz == Double.TYPE) {
+        if (clazz == Double.TYPE || clazz == Double.class) {
             return rand.nextDouble();
         }
 
