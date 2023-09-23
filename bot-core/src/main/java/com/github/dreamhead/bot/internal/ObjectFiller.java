@@ -33,7 +33,7 @@ public class ObjectFiller {
             return rand.nextDouble();
         }
 
-        if (clazz == Long.TYPE) {
+        if (clazz == Long.TYPE || clazz == Long.class) {
             return rand.nextLong();
         }
 

@@ -12,6 +12,8 @@ public class BigData {
 
     private long longValue;
 
+    private Long aLongValue;
+
     private float floatValue;
 
     private char charValue;
@@ -48,6 +50,10 @@ public class BigData {
 
     public long getLongValue() {
         return longValue;
+    }
+
+    public Long getALongValue() {
+        return aLongValue;
     }
 
     public float getFloatValue() {
