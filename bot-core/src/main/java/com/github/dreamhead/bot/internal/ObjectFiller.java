@@ -37,7 +37,7 @@ public class ObjectFiller {
             return rand.nextLong();
         }
 
-        if (clazz == Float.TYPE) {
+        if (clazz == Float.TYPE || clazz == Float.class) {
             return rand.nextFloat();
         }
 

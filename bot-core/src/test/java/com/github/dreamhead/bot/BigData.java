@@ -16,6 +16,8 @@ public class BigData {
 
     private float floatValue;
 
+    private Float aFloatValue;
+
     private char charValue;
 
     private short shortValue;
@@ -58,6 +60,10 @@ public class BigData {
 
     public float getFloatValue() {
         return floatValue;
+    }
+
+    public Float getAFloatValue() {
+        return aFloatValue;
     }
 
     public char getCharValue() {
