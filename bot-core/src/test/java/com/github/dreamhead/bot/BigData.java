@@ -20,6 +20,8 @@ public class BigData {
 
     private char charValue;
 
+    private Character characterValue;
+
     private short shortValue;
 
     private byte byteValue;
@@ -68,6 +70,10 @@ public class BigData {
 
     public char getCharValue() {
         return charValue;
+    }
+
+    public Character getCharacterValue() {
+        return characterValue;
     }
 
     public short getShortValue() {

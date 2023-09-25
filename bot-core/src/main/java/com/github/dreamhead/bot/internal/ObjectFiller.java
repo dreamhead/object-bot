@@ -41,7 +41,7 @@ public class ObjectFiller {
             return rand.nextFloat();
         }
 
-        if (clazz == Character.TYPE) {
+        if (clazz == Character.TYPE || clazz == Character.class) {
             return (char) (rand.nextInt(ALPHABETIC_LENGTH) + 'a');
         }
 
