@@ -24,6 +24,8 @@ public class BigData {
 
     private short shortValue;
 
+    private Short aShortValue;
+
     private byte byteValue;
 
     private boolean booleanValue;
@@ -78,6 +80,10 @@ public class BigData {
 
     public short getShortValue() {
         return shortValue;
+    }
+
+    public Short getAShortValue() {
+        return aShortValue;
     }
 
     public byte getByteValue() {

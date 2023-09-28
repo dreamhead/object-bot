@@ -52,6 +52,7 @@ public class ClassObjectBotTest {
         assertThat(data.getCharValue()).isNotEqualTo((char)0);
         assertThat(data.getCharacterValue()).isNotNull();
         assertThat(data.getShortValue()).isNotZero();
+        assertThat(data.getAShortValue()).isNotNull();
         assertThat(data.getByteValue()).isNotZero();
         assertThat(data.isBooleanValue()).isIn(true, false);
     }

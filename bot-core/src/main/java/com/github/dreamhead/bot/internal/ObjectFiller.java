@@ -45,7 +45,7 @@ public class ObjectFiller {
             return (char) (rand.nextInt(ALPHABETIC_LENGTH) + 'a');
         }
 
-        if (clazz == Short.TYPE) {
+        if (clazz == Short.TYPE || clazz == Short.class) {
             return (short) rand.nextInt(Short.MAX_VALUE);
         }
 
