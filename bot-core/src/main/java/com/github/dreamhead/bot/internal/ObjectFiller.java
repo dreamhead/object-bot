@@ -49,7 +49,7 @@ public class ObjectFiller {
             return (short) rand.nextInt(Short.MAX_VALUE);
         }
 
-        if (clazz == Byte.TYPE) {
+        if (clazz == Byte.TYPE || clazz == Byte.class) {
             byte[] bytes = new byte[1];
             rand.nextBytes(bytes);
             return bytes[0];

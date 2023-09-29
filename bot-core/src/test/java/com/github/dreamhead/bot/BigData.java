@@ -28,6 +28,8 @@ public class BigData {
 
     private byte byteValue;
 
+    private Byte aByteValue;
+
     private boolean booleanValue;
 
     public BigData(final Data data) {
@@ -88,6 +90,10 @@ public class BigData {
 
     public byte getByteValue() {
         return byteValue;
+    }
+
+    public Byte getAByteValue() {
+        return aByteValue;
     }
 
     public boolean isBooleanValue() {
