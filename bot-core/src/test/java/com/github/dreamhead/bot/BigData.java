@@ -32,6 +32,8 @@ public class BigData {
 
     private boolean booleanValue;
 
+    private Boolean aBooleanValue;
+
     public BigData(final Data data) {
         this.data = data;
     }
@@ -98,5 +100,9 @@ public class BigData {
 
     public boolean isBooleanValue() {
         return booleanValue;
+    }
+
+    public Boolean getABooleanValue() {
+        return aBooleanValue;
     }
 }
