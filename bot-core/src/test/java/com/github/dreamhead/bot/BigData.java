@@ -34,6 +34,8 @@ public class BigData {
 
     private Boolean aBooleanValue;
 
+    private Void voidValue;
+
     public BigData(final Data data) {
         this.data = data;
     }
@@ -104,5 +106,9 @@ public class BigData {
 
     public Boolean getABooleanValue() {
         return aBooleanValue;
+    }
+
+    public Void getVoidValue() {
+        return voidValue;
     }
 }

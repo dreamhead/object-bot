@@ -59,6 +59,11 @@ public class ObjectFiller {
             return rand.nextBoolean();
         }
 
+        if (clazz == Void.class) {
+            // Should ignore void type
+            return null;
+        }
+
         Object filedValue = this.strategy.newInstance(clazz);
         return fill(filedValue, fillStrategy);
     }
