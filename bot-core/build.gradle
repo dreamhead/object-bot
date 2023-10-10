@@ -1,8 +1,17 @@
 dependencies {
-    implementation("io.github.kostaskougios:cloning:$cloningVersion")
-    implementation("org.apache.commons:commons-lang3:$commonsLangVersion")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    implementation(
+            "io.github.kostaskougios:cloning:$cloningVersion",
+            "org.jeasy:easy-random-core:$easyRandomVersion"
+    )
+
+    testImplementation(
+            "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    )
+
+    testRuntimeOnly(
+            "org.junit.jupiter:junit-jupiter-engine:$junitVersion",
+            "org.junit.platform:junit-platform-launcher:$junitPlatformVersion"
+    )
 }
 
 test {

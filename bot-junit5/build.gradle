@@ -1,7 +1,14 @@
 dependencies {
     api("org.junit.jupiter:junit-jupiter-api:$junitVersion")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+
+    testImplementation(
+            "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    )
+
+    testRuntimeOnly(
+            "org.junit.jupiter:junit-jupiter-engine:$junitVersion",
+            "org.junit.platform:junit-platform-launcher:$junitPlatformVersion"
+    )
 }
 
 test {

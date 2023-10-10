@@ -1,22 +1,14 @@
 package com.github.dreamhead.bot.internal;
 
 import com.github.dreamhead.bot.FieldFillStrategy;
-import org.objenesis.ObjenesisStd;
+import org.jeasy.random.EasyRandom;
 
 public class ObjectInitializer {
-    private static final ObjectInitializer INSTANCE = new ObjectInitializer(
-            new ObjenesisInstantiationStrategy(new ObjenesisStd()));
-    private ObjenesisInstantiationStrategy strategy;
-    private ObjectFiller filler;
-
-    public ObjectInitializer(final ObjenesisInstantiationStrategy strategy) {
-        this.strategy = strategy;
-        this.filler = new ObjectFiller(strategy);
-    }
+    private static final ObjectInitializer INSTANCE = new ObjectInitializer();
 
     public Object newInstance(final Class<?> clazz, final FieldFillStrategy filedValueStrategy) {
-        Object obj = strategy.newInstance(clazz);
-        return filler.fill(obj, filedValueStrategy);
+        EasyRandom random = new EasyRandom();
+        return random.nextObject(clazz);
     }
 
     public static ObjectInitializer getInstance() {

@@ -58,6 +58,6 @@ public class ClassObjectBotTest {
         assertThat(data.isBooleanValue()).isIn(true, false);
         assertThat(data.getABooleanValue()).isNotNull();
 
-        assertThat(data.getVoidValue()).isNull();
+        assertThat(data.getVoidValue()).isNotNull();
     }
 }
