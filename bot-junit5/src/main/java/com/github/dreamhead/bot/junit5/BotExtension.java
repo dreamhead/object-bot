@@ -123,7 +123,7 @@ public class BotExtension implements BeforeAllCallback, AfterAllCallback, TestIn
     private ObjectBot createBot(final BotWith botWith) {
         Class<? extends BotInitializer>[] factories = botWith.value();
         BotInitializer initializer = newInstance(factories[0]);
-        ObjectBot bot = new ObjectBot();
+        ObjectBot bot = new ObjectBot(botWith.strategy());
         initializer.initialize(bot);
         return bot;
     }

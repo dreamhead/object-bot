@@ -108,4 +108,13 @@ public class ObjectBotTest {
                 field("field1").value(now));
         assertThat(data.getField1()).isEqualTo(now);
     }
+
+    @Test
+    public void should_get_class_with_random_value() {
+        bot = new ObjectBot(FieldFillStrategy.RANDOM);
+        Data data = bot.of("hello", Data.class);
+        assertThat(data.getField1()).isNotNull();
+        assertThat(data.getField2()).isNotNull();
+
+    }
 }

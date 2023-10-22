@@ -19,6 +19,15 @@ import static com.github.dreamhead.bot.reflection.ReflectionSupport.setFieldValu
 
 public class ObjectBot {
     private Map<String, Slot> container = new HashMap<>();
+    private final FieldFillStrategy strategy;
+
+    public ObjectBot(final FieldFillStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public ObjectBot() {
+        this(FieldFillStrategy.DEFAULT);
+    }
 
     public final ObjectBot define(final String name,
                                   final Object object) {
@@ -40,7 +49,11 @@ public class ObjectBot {
         Slot slot = container.get(name);
 
         if (Objects.isNull(slot)) {
-            throw new IllegalArgumentException("No Bot [" + name + "] found");
+            if (strategy == FieldFillStrategy.DEFAULT) {
+                throw new IllegalArgumentException("No Bot [" + name + "] found");
+            }
+
+            slot = new ClassSlot(clazz, FieldFillStrategy.RANDOM);
         }
 
         if (!clazz.isAssignableFrom(slot.getEntryClass())) {
