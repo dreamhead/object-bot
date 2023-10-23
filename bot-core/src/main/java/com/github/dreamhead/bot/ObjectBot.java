@@ -46,15 +46,7 @@ public class ObjectBot {
 
     @SuppressWarnings("unchecked")
     public final <T> T of(final String name, final Class<T> clazz, final FieldEntry<?>... fields) {
-        Slot slot = container.get(name);
-
-        if (Objects.isNull(slot)) {
-            if (strategy == FieldFillStrategy.DEFAULT) {
-                throw new IllegalArgumentException("No Bot [" + name + "] found");
-            }
-
-            slot = new ClassSlot(clazz, FieldFillStrategy.RANDOM);
-        }
+        Slot slot = getSlot(name, clazz);
 
         if (!clazz.isAssignableFrom(slot.getEntryClass())) {
             throw new IllegalArgumentException("Mismatch class [" + clazz.getName() + "] found for [" + name + "]");
@@ -63,6 +55,21 @@ public class ObjectBot {
         Object entry = slot.getEntry();
 
         return override((T) entry, fields);
+    }
+
+    private <T> Slot getSlot(final String name, final Class<T> clazz) {
+        Slot slot = container.get(name);
+
+        if (!Objects.isNull(slot)) {
+            return slot;
+        }
+
+
+        if (strategy == FieldFillStrategy.RANDOM) {
+            return new ClassSlot(clazz, FieldFillStrategy.RANDOM);
+        }
+
+        throw new IllegalArgumentException("No Bot [" + name + "] found");
     }
 
     private static final Cloner CLONER;

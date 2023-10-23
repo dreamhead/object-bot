@@ -115,6 +115,5 @@ public class ObjectBotTest {
         Data data = bot.of("hello", Data.class);
         assertThat(data.getField1()).isNotNull();
         assertThat(data.getField2()).isNotNull();
-
     }
 }
