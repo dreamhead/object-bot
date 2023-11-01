@@ -1,5 +1,6 @@
 package com.github.dreamhead.bot.junit5;
 
+import com.github.dreamhead.bot.FieldFillStrategy;
 import com.github.dreamhead.bot.annotation.AnyField;
 import com.github.dreamhead.bot.annotation.BooleanField;
 import com.github.dreamhead.bot.annotation.Bot;
@@ -137,6 +138,10 @@ public class BotExtension implements BeforeAllCallback, AfterAllCallback, TestIn
             ObjectBot bot = createBot(botWith);
             context.getStore(BOT).put(testClass, bot);
         });
+
+        if (!annotation.isPresent()) {
+            context.getStore(BOT).put(testClass, new ObjectBot(FieldFillStrategy.RANDOM));
+        }
     }
 
     private Optional<BotWith> findBotAnnotation(final ExtensionContext context) {
