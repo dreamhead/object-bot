@@ -134,14 +134,9 @@ public class BotExtension implements BeforeAllCallback, AfterAllCallback, TestIn
         Class<?> testClass = context.getRequiredTestClass();
 
         Optional<BotWith> annotation = findBotAnnotation(context);
-        annotation.ifPresent(botWith -> {
-            ObjectBot bot = createBot(botWith);
-            context.getStore(BOT).put(testClass, bot);
-        });
 
-        if (!annotation.isPresent()) {
-            context.getStore(BOT).put(testClass, new ObjectBot(FieldFillStrategy.RANDOM));
-        }
+        ObjectBot bot = annotation.map(this::createBot).orElseGet(() -> new ObjectBot(FieldFillStrategy.RANDOM));
+        context.getStore(BOT).put(testClass, bot);
     }
 
     private Optional<BotWith> findBotAnnotation(final ExtensionContext context) {
