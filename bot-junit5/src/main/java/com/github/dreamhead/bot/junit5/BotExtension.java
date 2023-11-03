@@ -43,7 +43,7 @@ import static com.github.dreamhead.bot.reflection.ReflectionSupport.setFieldValu
 import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.extension.ExtensionContext.Namespace.create;
 
-public class BotExtension implements BeforeAllCallback, AfterAllCallback, TestInstancePostProcessor {
+public final class BotExtension implements BeforeAllCallback, AfterAllCallback, TestInstancePostProcessor {
     private static final ExtensionContext.Namespace BOT = create("com.github.dreamhead.bot");
 
     @Override
