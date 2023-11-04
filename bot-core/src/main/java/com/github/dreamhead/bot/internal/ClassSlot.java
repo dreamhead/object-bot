@@ -2,7 +2,7 @@ package com.github.dreamhead.bot.internal;
 
 import com.github.dreamhead.bot.FieldFillStrategy;
 
-public class ClassSlot implements Slot {
+public final class ClassSlot implements Slot {
     private final Class<?> clazz;
     private final FieldFillStrategy strategy;
 
