@@ -1,6 +1,6 @@
 package com.github.dreamhead.bot.internal;
 
-public class ObjectSlot implements Slot {
+public final class ObjectSlot implements Slot {
     private final Object entry;
 
     public ObjectSlot(final Object entry) {
