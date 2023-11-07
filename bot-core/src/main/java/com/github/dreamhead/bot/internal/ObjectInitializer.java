@@ -3,7 +3,7 @@ package com.github.dreamhead.bot.internal;
 import com.github.dreamhead.bot.FieldFillStrategy;
 import org.jeasy.random.EasyRandom;
 
-public class ObjectInitializer {
+public final class ObjectInitializer {
     private static final ObjectInitializer INSTANCE = new ObjectInitializer();
 
     public Object newInstance(final Class<?> clazz, final FieldFillStrategy filedValueStrategy) {
