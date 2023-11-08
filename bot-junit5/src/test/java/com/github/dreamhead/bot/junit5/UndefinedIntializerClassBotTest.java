@@ -1,8 +1,6 @@
 package com.github.dreamhead.bot.junit5;
 
-import com.github.dreamhead.bot.FieldFillStrategy;
 import com.github.dreamhead.bot.annotation.Bot;
-import com.github.dreamhead.bot.annotation.BotWith;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
